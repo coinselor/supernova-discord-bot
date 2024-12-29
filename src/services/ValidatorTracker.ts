@@ -1,4 +1,9 @@
-import { Client, Message, TextChannel, NewsChannel } from "npm:discord.js@14.14.1";
+import {
+	Client,
+	Message,
+	TextChannel,
+	NewsChannel,
+} from "npm:discord.js@14.14.1";
 import { ValidatorState, ValidatorResponse } from "../types/validator.ts";
 import {
 	EMOJI,
@@ -52,8 +57,16 @@ export class ValidatorTracker {
 			const channel = await this.discordClient.channels.fetch(
 				this.channelId
 			);
-			if (!channel || !(channel instanceof TextChannel || channel instanceof NewsChannel)) {
-				console.error("Channel not found or not a text/announcement channel");
+			if (
+				!channel ||
+				!(
+					channel instanceof TextChannel ||
+					channel instanceof NewsChannel
+				)
+			) {
+				console.error(
+					"Channel not found or not a text/announcement channel"
+				);
 				return;
 			}
 
@@ -103,9 +116,17 @@ export class ValidatorTracker {
 					) || null;
 
 				if (!this.pinnedStatusMessage) {
-					this.pinnedStatusMessage =
-						await channel.send(statusMessage);
-					await this.pinnedStatusMessage!.pin();
+					try {
+						this.pinnedStatusMessage =
+							await channel.send(statusMessage);
+						await this.pinnedStatusMessage!.pin();
+					} catch (error) {
+						console.error(
+							"Failed to pin message. Please ensure the bot has 'Manage Messages' permission in this channel.",
+							error
+						);
+						this.pinnedStatusMessage = null;
+					}
 				}
 			}
 
@@ -126,8 +147,16 @@ export class ValidatorTracker {
 			const channel = await this.discordClient.channels.fetch(
 				this.channelId
 			);
-			if (!channel || !(channel instanceof TextChannel || channel instanceof NewsChannel)) {
-				console.error("Channel not found or not a text/announcement channel");
+			if (
+				!channel ||
+				!(
+					channel instanceof TextChannel ||
+					channel instanceof NewsChannel
+				)
+			) {
+				console.error(
+					"Channel not found or not a text/announcement channel"
+				);
 				return;
 			}
 
