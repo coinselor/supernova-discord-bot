@@ -1,4 +1,4 @@
-import { Client, Message, TextChannel } from "npm:discord.js@14.14.1";
+import { Client, Message, TextChannel, NewsChannel } from "npm:discord.js@14.14.1";
 import { ValidatorState, ValidatorResponse } from "../types/validator.ts";
 import {
 	EMOJI,
@@ -52,8 +52,8 @@ export class ValidatorTracker {
 			const channel = await this.discordClient.channels.fetch(
 				this.channelId
 			);
-			if (!channel || !(channel instanceof TextChannel)) {
-				console.error("Channel not found or not a text channel");
+			if (!channel || !(channel instanceof TextChannel || channel instanceof NewsChannel)) {
+				console.error("Channel not found or not a text/announcement channel");
 				return;
 			}
 
@@ -126,8 +126,8 @@ export class ValidatorTracker {
 			const channel = await this.discordClient.channels.fetch(
 				this.channelId
 			);
-			if (!channel || !(channel instanceof TextChannel)) {
-				console.error("Channel not found or not a text channel");
+			if (!channel || !(channel instanceof TextChannel || channel instanceof NewsChannel)) {
+				console.error("Channel not found or not a text/announcement channel");
 				return;
 			}
 
